@@ -25,7 +25,7 @@ class MinecraftPrint:
 
     def __init__(self, level, output):
         self.level_name = level
-        self.output_name = output + '.stl'
+        self.output_name = output + '.cub'
 
         #The list of goodness and markers
         #Format: [[chunk_x, chunk_z, block_x, block_z, block_y]]
@@ -156,40 +156,22 @@ class MinecraftPrint:
             print self.object_array
         depth = len(self.object_array[0][0])    
 
-        str_o = "solid Minecraft\n";
-        str_e = "    endloop\n  endfacet\n"
-        str_s = "  facet normal %d %d %d\n    outer loop\n"
-        str_v = "      vertex %d %d %d\n"    
-
         print "start"
 
         f=open(filename, 'w')
-        f.write(str_o)
+        f.write("; Cubical data of a minecraft region")
+
+        print self.object_array
+
         for x in range(width):
             print str(x/float(width)*100) + "%"
             for y in range(height):
                 for z in range(depth):
                     if self.object_array[x][y][z] > 0:
-                        if x==0 or self.object_array[x-1][y][z]<=0:
-                            f.write("".join([str_s%(-1,0,0),str_v%(x,z+1,y), str_v%(x,z,y+1),str_v%(x,z+1,y+1),str_e]))
-                            f.write("".join([str_s%(-1,0,0),str_v%(x,z+1,y), str_v%(x,z,y),str_v%(x,z,y+1),str_e]))
-                        if x==width-1 or self.object_array[x+1][y][z]<=0:
-                            f.write("".join([str_s%(1,0,0),str_v%(x+1,z+1,y), str_v%(x+1,z+1,y+1),str_v%(x+1,z,y+1),str_e]))
-                            f.write("".join([str_s%(1,0,0),str_v%(x+1,z+1,y), str_v%(x+1,z,y+1),str_v%(x+1,z,y),str_e]))
-                        if (z==0) or self.object_array[x][y][z-1]<=0:
-                            f.write("".join([str_s%(0,0,-1),str_v%(x,z,y), str_v%(x+1,z,y+1),str_v%(x,z,y+1),str_e]))
-                            f.write("".join([str_s%(0,0,-1),str_v%(x,z,y), str_v%(x+1,z,y),str_v%(x+1,z,y+1),str_e]))
-                        if (z==depth-1) or self.object_array[x][y][z+1]<=0:
-                            f.write("".join([str_s%(0,0,1),str_v%(x,z+1,y), str_v%(x,z+1,y+1),str_v%(x+1,z+1,y+1),str_e]))
-                            f.write("".join([str_s%(0,0,1),str_v%(x,z+1,y), str_v%(x+1,z+1,y+1),str_v%(x+1,z+1,y),str_e]))
-                        if (y==0) or self.object_array[x][y-1][z]<=0:
-                            f.write("".join([str_s%(0,-1,0),str_v%(x+1,z,y), str_v%(x,z+1,y),str_v%(x+1,z+1,y),str_e]))
-                            f.write("".join([str_s%(0,-1,0),str_v%(x+1,z,y), str_v%(x,z,y),str_v%(x,z+1,y),str_e]))
-                        if (y==height-1) or self.object_array[x][y+1][z]<=0:
-                            f.write("".join([str_s%(0,1,0),str_v%(x+1,z,y+1), str_v%(x+1,z+1,y+1),str_v%(x,z+1,y+1),str_e]))
-                            f.write("".join([str_s%(0,1,0),str_v%(x+1,z,y+1), str_v%(x,z+1,y+1),str_v%(x,z,y+1),str_e]))
 
-        f.write("endsolid Minecraft\n")
+                        coords = "".join(["(",str(x), ",",str(y),",",str(z),")\n"])
+                        f.write(coords)
+
         print "100%"
         f.close()
 
