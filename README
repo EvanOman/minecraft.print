@@ -1,3 +1,12 @@
+This is a very simple modification of the minecraft.print program for use with the CHomP software found at http://chomp.rutgers.edu/.
+
+With this modification a user can putput chunks of minecraft and then view them with the CHomP showcubes command. More significantly with the files in the .cub format CHomP can easily compute the Betti Numbers of the 3-Dimensional space. See http://evanoman.com/projects/ for more information. 
+
+Just to be clear, entirely all of the credit for this work belongs to the original guys who wrote this amazing code. Check out their website at http://www.minecraftprint.com/
+
+<---------Original Documentation--------->
+
+
 ---WHAT IS THIS?---
 Minecraft.Print() is a python library for converting defined regions of Minecraft levels to a 3D Printable format.
 
